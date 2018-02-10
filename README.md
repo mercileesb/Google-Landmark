@@ -11,15 +11,8 @@ https://www.kaggle.com/c/landmark-recognition-challenge
 
 
 
+## Detailed information
 
-Analyzing dataset
 
-`
-import pandas as pd
-
-CSV_FILE = "train.csv"
-
-input_data = pd.read_csv(CSV_FILE)
-input_data.shape
 
 `
