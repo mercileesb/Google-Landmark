@@ -5,13 +5,15 @@ This page is ready for Google Landmark Recognition Challenge
 
 
 
-Pre-requisite
+## Pre-requisite
 
-https://www.kaggle.com/c/landmark-recognition-challenge
+* Register on [this website](https://www.kaggle.com/c/landmark-recognition-challenge).
+
+* Download more than 1.2M image datasets. (it has high resolution more than Full HD)
+
+* Enjoy kaggle  !
 
 
-
-## Detailed information
 
 
 ## TODO
