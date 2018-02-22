@@ -16,8 +16,10 @@ https://www.kaggle.com/c/landmark-recognition-challenge
 
 ## TODO
 
-[] Analyzing dataset 
-[] Extract local&global descriptors [DELF_Tensorflow](https://github.com/mercileesb/delf_tensorflow)
-[] Modeling
-[] Ensemble all of them
-`
+[ ] Analyzing dataset 
+
+[ ] Extract local&global descriptors [DELF_Tensorflow](https://github.com/mercileesb/delf_tensorflow)
+
+[ ] Modeling
+
+[ ] Ensemble all of them
