@@ -18,7 +18,7 @@ https://www.kaggle.com/c/landmark-recognition-challenge
 
 [ ] Analyzing dataset 
 
-[ ] Extract local&global descriptors [DELF_Tensorflow](https://github.com/mercileesb/delf_tensorflow)
+[Now working] Extract local&global descriptors [DELF_Tensorflow](https://github.com/mercileesb/delf_tensorflow)
 
 [ ] Modeling
 
