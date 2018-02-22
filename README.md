@@ -17,6 +17,7 @@ https://www.kaggle.com/c/landmark-recognition-challenge
 ## TODO
 
 [O] Analyzing dataset : [iPython notebook : Exploration](https://github.com/mercileesb/Google-Landmark/blob/master/Exprolation.ipynb)
+* References from [Kaggle Kernels](https://www.kaggle.com/mxdbld/simple-exploration-of-google-recognition)
 
 [O] Extract local&global descriptors : [DELF_Tensorflow](https://github.com/mercileesb/delf_tensorflow)
 
