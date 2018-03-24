@@ -26,7 +26,7 @@ def download_similar_image(image_path):
 
     # dst_image_folder = os.path.join(download_dst_folder,  org_image_path.split('/')[1])
 
-    driver = load_driver("chromedriver")
+    driver = load_driver()
     driver.get("https://www.google.com/imghp?h")
 
     image_path = os.path.join(os.getcwd(), org_image_path).replace('\\', '/')
