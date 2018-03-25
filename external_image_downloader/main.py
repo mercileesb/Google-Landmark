@@ -70,9 +70,8 @@ def download_similar_image(image_path):
             raw_img = urlo.read()
             if len(Type) == 0:
                 f = open(dst_image_folder + '_' + str(i) + ".jpg", 'wb')
-            else:
-                if Type == 'jpg' or Type == 'png':
-                    f = open(dst_image_folder + '_' + str(i) + "." + Type, 'wb')
+            elif Type == 'jpg' or Type == 'png':
+                f = open(dst_image_folder + '_' + str(i) + "." + Type, 'wb')
             f.write(raw_img)
             f.close()
         except:

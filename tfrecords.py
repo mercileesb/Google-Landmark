@@ -21,13 +21,13 @@ def make_traincsvfile():
 	_LABEL_LIST = os.listdir(_FEATURE_ROOT)
 
 	
-	f = open("train_SENet5_max1000.txt","w")
+	f = open("train_SENet5_max50.txt","w")
 	
 	
 	for label in _LABEL_LIST:
 		
 		featurefolder = os.listdir(os.path.join(_FEATURE_ROOT, label))
-		featurefolder = featurefolder[:1000]
+		featurefolder = featurefolder[:50]
 		for featurefile in featurefolder:
 			
 			s = "{}\t{}\n".format(str(featurefile), str(label))
@@ -40,7 +40,7 @@ def make_testcsvfile():
 	_FEATURE_ROOT = "../kaggle_test"
 	_FEATURE_LIST = os.listdir(_FEATURE_ROOT)
 
-	f = open("test_SENet5_max1000.txt", "w")
+	f = open("test_SENet5_max50.txt", "w")
 
 	for featurefile in _FEATURE_LIST:
 		s = "{}\n".format(str(featurefile))
@@ -88,7 +88,7 @@ def write_feature_test_tfrecord(idx, dataset, datatype):
 	writer = tf.python_io.TFRecordWriter(os.path.join(frame_dir, filename))
 	for item in dataset:
 		filename = item[0].encode()
-		label = ""
+		label = 0
 		featurename = item[1]
 
 		feature_path = os.path.join("/workspace/kaggle_test", featurename)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 	# parser.add_argument("--filetype", help="train / val / test")
 	# args = parser.parse_args()
 	#make_testcsvfile()
-	make_traincsvfile()
+	#make_traincsvfile()
 	make_tfrecord()
 	
 	#make_testtfrecord()

@@ -21,7 +21,7 @@ import numpy as np
 
 def get_feature_list():
 	feature_list = []
-	txt_file = "{}_{}.txt".format("train", "SENet5")
+	txt_file = "{}_{}.txt".format("train", "SENet5_max1000")
 	f = open(txt_file, "r")
 	while True:
 		line = f.readline()
