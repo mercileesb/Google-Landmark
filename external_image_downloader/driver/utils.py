@@ -23,7 +23,7 @@ def get_driver_root(global_save=True):
             driver_folder = driver_folder + 'linux64/'
 
     else:
-        print('지원되지 않는 운영체제입니다.')
+        print('Not supported OS')
         exit()
 
     if global_save:
@@ -48,7 +48,7 @@ def load_driver(driver_type='phantomjs', driver_folder=driver_root):
         driver = webdriver.Chrome(driver_folder + 'chromedriver')
 
     else:
-        print("지원되지 않는 타입입니다.")
+        print("Not supported types.")
         exit()
 
     return driver

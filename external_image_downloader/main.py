@@ -16,6 +16,8 @@ try:
 except:
     from urllib2 import Request, urlopen
 
+import csv
+csvfile = None
 
 
 def download_similar_image(image_path):
@@ -24,9 +26,12 @@ def download_similar_image(image_path):
 
     print(org_image_path)
 
+    idx = org_image_path.split('/')[1]
+    filename = org_image_path.split('/')[2].split('.')[0]
+
     # dst_image_folder = os.path.join(download_dst_folder,  org_image_path.split('/')[1])
 
-    driver = load_driver()
+    driver = load_driver('chromedriver')
     driver.get("https://www.google.com/imghp?h")
 
     image_path = os.path.join(os.getcwd(), org_image_path).replace('\\', '/')
@@ -65,15 +70,16 @@ def download_similar_image(image_path):
         ActualImages.append((link, Type))
     for i, (img , Type) in enumerate(ActualImages):
         try:
-            req = Request(img)  #, headers={'User-Agent': header})
-            urlo = urlopen(req)
-            raw_img = urlo.read()
-            if len(Type) == 0:
-                f = open(dst_image_folder + '_' + str(i) + ".jpg", 'wb')
-            elif Type == 'jpg' or Type == 'png':
-                f = open(dst_image_folder + '_' + str(i) + "." + Type, 'wb')
-            f.write(raw_img)
-            f.close()
+            csvfile.writerow(['{}_{}'.format(filename, i), img, idx])
+            # req = Request(img)  #, headers={'User-Agent': header})
+            # urlo = urlopen(req)
+            # raw_img = urlo.read()
+            # if len(Type) == 0:
+            #     f = open(dst_image_folder + '_' + str(i) + ".jpg", 'wb')
+            # elif Type == 'jpg' or Type == 'png':
+            #     f = open(dst_image_folder + '_' + str(i) + "." + Type, 'wb')
+            # f.write(raw_img)
+            # f.close()
         except:
             continue
 
@@ -109,14 +115,20 @@ def main():
             except:
                 continue
 
+    csvfiles = open('download.csv', 'w', newline='')
+    global csvfile
+    csvfile = csv.writer(csvfiles, delimiter=',')
+    csvfile.writerow(['id', 'url', 'landmark_id'])
 
-    # for i in filelists:
-    #     download_similar_image(i)
+    for i in filelists:
+        download_similar_image(i)
 
-    pool = multiprocessing.Pool(processes=4)  # Num of CPUs
-    pool.map(download_similar_image, filelists)
-    pool.close()
-    pool.terminate()
+    csvfiles.close()
+
+    # pool = multiprocessing.Pool(processes=4)  # Num of CPUs
+    # pool.map(download_similar_image, filelists)
+    # pool.close()
+    # pool.terminate()
 
 
 if __name__ == '__main__':
