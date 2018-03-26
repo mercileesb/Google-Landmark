@@ -17,12 +17,10 @@ except:
     from urllib2 import Request, urlopen
 
 import csv
-csvfile = None
 
 
 def download_similar_image(image_path):
-    org_image_path = image_path[0]
-    dst_image_folder = image_path[1]
+    org_image_path = image_path
 
     print(org_image_path)
 
@@ -30,6 +28,7 @@ def download_similar_image(image_path):
     filename = org_image_path.split('/')[2].split('.')[0]
 
     # dst_image_folder = os.path.join(download_dst_folder,  org_image_path.split('/')[1])
+    return_data = list()
 
     driver = load_driver('chromedriver')
     driver.get("https://www.google.com/imghp?h")
@@ -61,7 +60,6 @@ def download_similar_image(image_path):
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
-    driver.close()
 
     ActualImages = [] # contains the link for Large original images, type of  image
 
@@ -70,7 +68,7 @@ def download_similar_image(image_path):
         ActualImages.append((link, Type))
     for i, (img , Type) in enumerate(ActualImages):
         try:
-            csvfile.writerow(['{}_{}'.format(filename, i), img, idx])
+            return_data.append(['{}_{}'.format(filename, i), img, idx])
             # req = Request(img)  #, headers={'User-Agent': header})
             # urlo = urlopen(req)
             # raw_img = urlo.read()
@@ -83,52 +81,34 @@ def download_similar_image(image_path):
         except:
             continue
 
-
+    driver.close()
+    return return_data
 
 
 def main():
     org_dir = 'image'
-    dst_dir = 'donwload'
 
     filelists = list()
-    try:
-        os.mkdir(dst_dir)
-    except:
-        pass
-
     target_dir = os.path.normpath(org_dir)  # remove trailing separator.
     for (path, dir, files) in os.walk(target_dir):
         for fname in files:
             paths = path.replace('\\', '/')
             folder_name = paths.split('/')[-1]
             org_filename = str(paths + "/" + fname)
+            filelists.append(org_filename)
 
-            dst_fname = fname.split('.')[0]
+    pool = multiprocessing.Pool(processes=4)  # Num of CPUs
+    return_value = pool.map(download_similar_image, filelists)
+    pool.close()
+    pool.terminate()
 
-            dst_filename = os.path.join(dst_dir, folder_name, dst_fname).replace('\\', '/')
-            fullfname = [org_filename, dst_filename]
-            filelists.append(fullfname)
+    with open('download.csv', 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=',')
+        csvwriter.writerow(['id', 'url', 'landmark_id'])
 
-            try:
-                dst_path = os.path.join(dst_dir, folder_name)
-                os.mkdir(dst_path)
-            except:
-                continue
-
-    csvfiles = open('download.csv', 'w', newline='')
-    global csvfile
-    csvfile = csv.writer(csvfiles, delimiter=',')
-    csvfile.writerow(['id', 'url', 'landmark_id'])
-
-    for i in filelists:
-        download_similar_image(i)
-
-    csvfiles.close()
-
-    # pool = multiprocessing.Pool(processes=4)  # Num of CPUs
-    # pool.map(download_similar_image, filelists)
-    # pool.close()
-    # pool.terminate()
+        for r_v in return_value:
+            for item in r_v:
+                csvwriter.writerow(item)
 
 
 if __name__ == '__main__':
